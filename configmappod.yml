@@ -1,0 +1,47 @@
+#htpasswd -c .htpasswd user
+#kubectl create secret generic tim-nginx-htpasswd --from-file .htpasswd
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tim-nginx
+spec:
+  containers:
+  - name: tim-nginx-pod
+    image: nginx:1.19.1
+    livenessProbe:
+      httpGet:
+        path: /
+        port: 80
+      initialDelaySeconds: 5
+      periodSeconds: 5
+    #command: ['sh','-c','echo configmap:$KEYFROMCONFIGMAP secret:$KEYFROMSECRET']
+    #env:
+    #- name: KEYFROMCONFIGMAP
+    #  valueFrom:
+    #  configMapKeyRef:
+    #    name: tim-configmap
+    #    key: key1
+    #- name: KEYFROMSECRET
+    #  valueFrom:
+    #  secretKeyRef:
+    #    name: tim-secret
+    #    key: secretkey1
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - name: config-volume
+      mountPath: /etc/nginx
+    - name: htpasswd-volume
+      mountPath: /etc/nginx/conf
+  volumes:
+  - name: config-volume
+    configMap:
+      name: tim-configmap
+  - name: htpasswd-volume
+    secret:
+      secretName: tim-nginx-htpasswd
+  restartPolicy: Always
+
+
+#kubectl exec busybox -- curl -u user:timo http://192.168.194.69/

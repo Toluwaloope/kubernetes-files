@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tim-configmap
+data:
+  key1: This is Timothy Tolulope's first key in config map
+  key2:
+    This is
+    a multiple line
+    key
+
+#kubectl describe configmap tim-configmap
