@@ -1,0 +1,26 @@
+#kubectl create namespaces timo-test
+#kubectl label nodes k8s-worker2 service=nip
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tim-test-app
+  namespace: beebox-auth
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: tim-test-app
+  template:
+    metadata:
+      labels:
+        app: tim-test-app
+    spec:
+      #nodeName: k8s-worker2
+      nodeSelector:
+        service: nip
+      containers:
+      - name: nginx
+        image: nginx:1.19.1
+        ports:
+        - containerPort: 80

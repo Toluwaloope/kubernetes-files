@@ -1,0 +1,24 @@
+apiVersion: app/v1
+kind: DaemonSet
+metadata:
+  name: tim-daemon-sets
+spec:
+  selector:
+    matchLabels: 
+      app: tim-daemon-apps
+  templates:
+    metadata:
+      lables:
+        app: tim-daemon-sets
+    spec:
+      containers:
+      - name: busybox
+        image: busybox:1.27
+        command: ['sh', '-c', 'while true; do rm -rf /beebox-temp/*; sleep 60; done']
+        volumeMounts:
+        - name: beebox-tmp
+          mountPath: /beebox-temp
+      volumes:
+      - name: beebox-tmp
+        hostPath:
+          path: /etc/beebox/tmp

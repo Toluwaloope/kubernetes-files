@@ -1,0 +1,16 @@
+#A static pod is a pod that can be created directly via the kubelest service without being controlled by
+#the control plane. It is easily done by just creating a pod definition yaml file in the kubelet
+#manifest folder /etc/kubernetes/manifests/
+#These pods have a mirror image in the control plane but cannot be managed by the control plane
+
+#cd /etc/kubernetes/manifests
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tim-static-pod
+spec:
+  replica: 3
+  containers:
+  - name: tim-static-web
+    image: nginx:1.19.1

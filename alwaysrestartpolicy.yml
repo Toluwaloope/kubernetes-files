@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 apiVersion: v1
 kind: Pod
 metadata:
@@ -11,3 +12,18 @@ spec:
     image: busybox
     command: ['sh','-c','sleep 10']
     #command: ['sh','-c','sleep 10: this is a command that will fail']
+=======
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tim-restart-policy-pod
+spec:
+  restartPolicy: Always
+  #restartPolicy: OnFailure
+  #restartPolicy: Never
+  containers:
+  - name: restart-ppod-busybox
+    image: busybox
+    command: ['sh','-c','sleep 10']
+    #command: ['sh','-c','sleep 10: this is a command that will fail']
+>>>>>>> db9df3f (Added new yaml files)
