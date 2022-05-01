@@ -1,0 +1,13 @@
+ETCDCTLAPI=3 etcdctl snapshot save /home/cloud_user/etcd_backup.db --endpoints=https://etcd1:2379 --cacert=/home/cloud_user/etcd-certs/etcd-ca.pem --cert=/home/cloud_user/etcd-certs/etcd-server.crt --key=/home/cloud_user/etcd-certs/etcd-server.key
+
+sudo systemcl stop etcd
+
+sudo rm -rf /var/lib/etcd
+
+sudo ETCDCTLAPI=3 etcdctl snapshot restore /home/cloud_user/etcd_backup.db --initial-cluster etcd-restore=https://etcd1:2380 --initial-advertise-peer-urls https://etcd1:2380 --name etcd-restore --data-dir /var/lib/etcd
+
+sudo chown -R etcd:etcd /var/lib/etcd
+
+sudo systemctl start etcd
+
+sudo systemctl enable etcd
