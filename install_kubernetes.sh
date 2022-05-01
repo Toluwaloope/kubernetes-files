@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 sudo echo "overlay" >> /etc/modules-load.d/containerd.conf
 sudo echo "br_netfilter" >> /etc/modules-load.d/containerd.conf
@@ -57,7 +57,7 @@ sudo apt-mark hold kubelet kubeadm kubectl
 
 ##Setup kubernetes cluster only on the control plane====
 ##initialize kubernetes
-##sudo kubeadm init --pod-network-cidr 192.168.0.0/16 --kubernetes-version 1.23.0
+sudo kubeadm init --pod-network-cidr 192.168.0.0/16 --kubernetes-version 1.23.0
 
 #setup kube-config
 #mkdir -p $HOME/.kube
@@ -69,3 +69,7 @@ sudo apt-mark hold kubelet kubeadm kubectl
 
 #to get join goken for worker nodes
 ##kubeadm token create --print-join-command
+
+
+#kubeadm join 172.31.104.220:6443 --token camxz8.1ytx00ae8izsuz0v --discovery-token-ca-cert-hash sha256:4d5abf6febe5b9f553483cba9304ea695e3af7e2d16ec762efd7e90483aaa78c --ignore-preflight-errors=all 
+#https://monowar-mukul.medium.com/kubernetes-remove-worker-node-from-the-cluster-and-completely-uninstall-af41e00c1244
